@@ -55,7 +55,6 @@ const registerUser = async (req, res) => {
             message: "User registered successfully",
             error: false,
             success: true,
-            data: user
         })
 
 
@@ -145,7 +144,7 @@ const loginUser = async (req, res) => {
 
 
 
-
+        user.password = undefined;
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
             secure : true,
