@@ -9,7 +9,6 @@ const App = () => {
   return (
     <div className='overflow-x-hidden'>
       <ToastContainer />
-      <Header />
       <main>
         <MainRoutes />
       </main>

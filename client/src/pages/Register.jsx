@@ -6,6 +6,7 @@ import { useState } from "react";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
 import axios from "../config/axios.config";
 import { toast } from "react-toastify";
+import logo from "../assets/logo.png";
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -62,32 +63,10 @@ const Register = () => {
     }
   };
   return (
-    <div className=" bg-[rgb(var(--background))] flex items-center justify-center p-6 pt-40 ">
+    <div className="w-full h-screen bg-[rgb(var(--background))] flex items-center justify-center p-6 pt-20 ">
       <div className="max-w-5xl w-full bg-[rgb(var(--surface))] rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row-reverse border border-[rgb(var(--border))]">
-        {/* Side Banner */}
-        <div className="md:w-1/2 bg-[rgb(var(--primary))] p-12 hidden md:flex flex-col justify-center text-white">
-          <h2 className="text-4xl font-bold mb-6 italic">
-            Start your journey.
-          </h2>
-          <p className="text-white/80 mb-8">
-            Create an account to save your preferences and enjoy a faster
-            checkout experience.
-          </p>
-          <ul className="space-y-4 text-sm">
-            <li className="flex gap-2 items-center opacity-90">
-              <FiCheckCircle /> Personalized Recommendations
-            </li>
-            <li className="flex gap-2 items-center opacity-90">
-              <FiCheckCircle /> 1-Click Checkout
-            </li>
-            <li className="flex gap-2 items-center opacity-90">
-              <FiCheckCircle /> Rewards Program
-            </li>
-          </ul>
-        </div>
-
         {/* Form Side */}
-        <div className="md:w-1/2 p-8 md:p-12">
+        <div className="md:w-1/2 p-6 md:p-12">
           <div className="mb-8">
             <h1 className="text-2xl font-bold text-[rgb(var(--text-primary))]">
               Create Account
@@ -200,6 +179,29 @@ const Register = () => {
               Login
             </Link>
           </p>
+        </div>
+        {/* Side Banner */}
+        <div className="md:w-1/2 bg-[rgb(var(--primary))] p-12 hidden md:flex flex-col  text-white">
+          <img src={logo} alt="" className="w-30 h-30" />
+
+          <h2 className="text-4xl font-bold mb-6 italic">
+            Start your journey.
+          </h2>
+          <p className="text-white/80 mb-8">
+            Create an account to save your preferences and enjoy a faster
+            checkout experience.
+          </p>
+          <ul className="space-y-4 text-sm">
+            <li className="flex gap-2 items-center opacity-90">
+              <FiCheckCircle /> Personalized Recommendations
+            </li>
+            <li className="flex gap-2 items-center opacity-90">
+              <FiCheckCircle /> 1-Click Checkout
+            </li>
+            <li className="flex gap-2 items-center opacity-90">
+              <FiCheckCircle /> Rewards Program
+            </li>
+          </ul>
         </div>
       </div>
     </div>

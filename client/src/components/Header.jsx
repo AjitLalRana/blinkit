@@ -1,4 +1,4 @@
-import React from "react";
+import React, { use } from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -12,7 +12,9 @@ import {
   FiSettings,
 } from "react-icons/fi";
 import logo from "../assets/logo.png";
+import logoDark from "../assets/logoDark.png";
 import SubCategory from "./SubCategory";
+import ThemeToggle from "./ThemeToggle";
 
 const Header = () => {
   const [isUser, setIsUser] = useState(false);
@@ -20,13 +22,14 @@ const Header = () => {
   const [cartPrice, setCartPrice] = useState("$0.00");
   const [cartItemsCount, setCartItemsCount] = useState(0);
 
+
+
   const handleLogout = () => {
-    const confirmLogout = window.confirm("Are you sure you want to logout?");
-    if (confirmLogout) {
-      // Perform logout logic here (e.g., clear user session, redirect to login page)
-      setIsUser(false);
-    }
+    
   };
+
+  
+  
 
   // Common styles for the icon buttons
   const iconButtonClass =
@@ -41,13 +44,13 @@ const Header = () => {
             <img
               src={logo}
               alt="ShopMate Logo"
-              className="h-6 sm:h-8 w-auto object-contain"
+              className="h-20 sm:h-35 w-auto object-contain"
             />
           </Link>
         </div>
 
         {/* 2. Search Bar Section - Centered and Responsive */}
-        <div className="hidden  md:flex flex-1 relative group">
+        <div className="hidden   md:flex flex-1 relative group">
           <input
             type="text"
             placeholder="Search for luxury essentials..."
@@ -57,6 +60,9 @@ const Header = () => {
             <FiSearch size={16} />
           </button>
         </div>
+
+        {/* Theme Toggle Button */}
+        
 
         {/* 3. Actions: Login and Cart */}
 
