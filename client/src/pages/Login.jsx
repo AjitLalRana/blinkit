@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Link } from "react-router-dom";
 import { FiMail, FiLock, FiArrowRight } from "react-icons/fi";
 import { useForm } from "react-hook-form";
@@ -6,8 +7,12 @@ import axios from "../config/axios.config";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import logo from "../assets/logo.png";
+import {useSelector, useDispatch} from "react-redux"
+import {loadUser} from '../store/reducres/userSlice'
 
 const Login = () => {
+  const user = useSelector((state)=> state?.userReducer?.user);
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -18,11 +23,12 @@ const Login = () => {
   const navigate = useNavigate();
   const loginHandler = async (data) => {
     try {
-      const response = await axios.post("/user/login", data);
-      console.log(response.data.data);
+        const response = await axios.post("/user/login", data);
       if (response.data.success) {
         reset();
         toast.success("Login successful!");
+        dispatch(loadUser(response?.data?.data));
+        console.log(user);
         navigate("/");
       }
     } catch (error) {
@@ -31,7 +37,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center p-6 bg-[rgb(var(--background))] pt-40">
+    <div className="h-screen flex items-center justify-center p-6 bg-[rgb(var(--background))] pt-20">
       <div className=" max-w-5xl w-full bg-[rgb(var(--surface))] rounded-2xl shadow-xl overflow-hidden flex flex-col md:flex-row border border-[rgb(var(--border))]">
         {/* Left Side: Aesthetic/Branding */}
         <div className="md:w-1/2 bg-[rgb(var(--accent-soft))] p-12 hidden  md:flex flex-col justify-center text-[rgb(var(--text-primary))]">

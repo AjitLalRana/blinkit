@@ -1,7 +1,7 @@
 import UserModel from '../models/user.model.js'
 import bcrypt from 'bcryptjs'
-import  sendEmail  from '../config/sendEmail.js';
-import  verifyEmailTemplate  from '../utils/verifyEmailTemplate.js';
+import sendEmail from '../config/sendEmail.js';
+import verifyEmailTemplate from '../utils/verifyEmailTemplate.js';
 import generateAccessToken from '../utils/generateAccessToken.js';
 import generateRefreshToken from '../utils/generateRefreshToken.js';
 import { uploadAvatarToCloudinary } from '../utils/uploadToCloudinary.js';
@@ -13,7 +13,7 @@ import forgotPasswordTemplate from '../utils/forgotPasswordTemplate.js';
 const registerUser = async (req, res) => {
     try {
         const { name, password, email } = req.body
-        if(!name || !email || !password){
+        if (!name || !email || !password) {
             return res.status(400).json({
                 message: "Name, email and password are required",
                 error: true,
@@ -23,7 +23,7 @@ const registerUser = async (req, res) => {
 
         const existingUser = await UserModel.findOne({ email })
 
-        if(existingUser){
+        if (existingUser) {
             return res.status(409).json({
                 message: "User with this email already exists",
                 error: true,
@@ -48,7 +48,7 @@ const registerUser = async (req, res) => {
         const verifyEmail = await sendEmail({
             to: email,
             subject: "Welcome to Blinkit",
-            html: verifyEmailTemplate({name, url: verifyEmailUrl})
+            html: verifyEmailTemplate({ name, url: verifyEmailUrl })
         })
 
         return res.json({
@@ -70,7 +70,7 @@ const registerUser = async (req, res) => {
 const verifyEmail = async (req, res) => {
     try {
         const userId = req.query.code;
-        if(!userId){
+        if (!userId) {
             return res.status(400).json({
                 message: "Verification code is required",
                 error: true,
@@ -78,21 +78,21 @@ const verifyEmail = async (req, res) => {
             })
         }
         const user = await UserModel.findById(userId);
-        if(!user){
+        if (!user) {
             return res.status(404).json({
                 message: "User not found",
                 error: true,
                 success: false
             })
         }
-        if(user.verify_email === false){
+        if (user.verify_email === false) {
             user.verify_email = true;
             await user.save();
             return res.json({
                 message: "Email verified successfully",
                 error: false,
                 success: true
-            })  
+            })
         }
     } catch (error) {
         return res.status(500).json({
@@ -105,16 +105,16 @@ const verifyEmail = async (req, res) => {
 
 const loginUser = async (req, res) => {
     try {
-        const {email, password} = req.body;
-        if(!email || !password){
+        const { email, password } = req.body;
+        if (!email || !password) {
             return res.status(400).json({
                 message: "Email and password are required",
                 error: true,
                 success: false
             })
         }
-        const user = await UserModel.findOne({email});
-        if(!user){
+        const user = await UserModel.findOne({ email });
+        if (!user) {
             return res.status(404).json({
                 message: "User not found",
                 error: true,
@@ -122,17 +122,17 @@ const loginUser = async (req, res) => {
             })
         }
         const isPasswordValid = await bcrypt.compare(password, user.password);
-        if(!isPasswordValid){
+        if (!isPasswordValid) {
             return res.status(401).json({
                 message: "Invalid password",
                 error: true,
                 success: false
             })
         }
-        if(user.status !== "Active"){
+        if (user.status !== "Active") {
             return res.status(403).json({
                 message: `User account is ${user.status}. Please contact to administrator.`,
-                error: true,    
+                error: true,
                 success: false
             })
         }
@@ -144,21 +144,22 @@ const loginUser = async (req, res) => {
 
 
 
-        
+
         res.cookie('accessToken', accessToken, {
             httpOnly: true,
-            secure : true,
-            sameSite : 'None',
+            secure: true,
+            sameSite: 'None',
 
         })
         res.cookie('refreshToken', refreshToken, {
             httpOnly: true,
-            secure : true,
-            sameSite : 'None',
-            
+            secure: true,
+            sameSite: 'None',
+
         })
         user.password = undefined;
         user.refresh_token = undefined;
+
         return res.status(200).json({
             message: "User logged in successfully",
             error: false,
@@ -177,16 +178,16 @@ const loginUser = async (req, res) => {
 const logoutUser = async (req, res) => {
     try {
         const userId = req.userId;
-        await UserModel.findByIdAndUpdate(userId, {refresh_token: null})
-        res.clearCookie('accessToken',{
+        await UserModel.findByIdAndUpdate(userId, { refresh_token: null })
+        res.clearCookie('accessToken', {
             httpOnly: true,
-            secure : true,
-            sameSite : 'None',
+            secure: true,
+            sameSite: 'None',
         });
-        res.clearCookie('refreshToken',{
+        res.clearCookie('refreshToken', {
             httpOnly: true,
-            secure : true,
-            sameSite : 'None',  
+            secure: true,
+            sameSite: 'None',
         });
 
         return res.status(200).json({
@@ -205,25 +206,25 @@ const logoutUser = async (req, res) => {
 }
 
 const uploadAvatar = async (req, res) => {
-  try {
-    
-    const result = await uploadAvatarToCloudinary(req.file?.buffer);
-    await UserModel.findByIdAndUpdate(req.userId, { avatar: result.secure_url });
-    return res.status(200).json({
-      message: "Avatar uploaded",
-      url: result.secure_url,
-    });
+    try {
 
-  } catch (error) {
-    return res.status(500).json({ message: error.message });
-  }
+        const result = await uploadAvatarToCloudinary(req.file?.buffer);
+        await UserModel.findByIdAndUpdate(req.userId, { avatar: result.secure_url });
+        return res.status(200).json({
+            message: "Avatar uploaded",
+            url: result.secure_url,
+        });
+
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
 };
 
 const updateUserDetails = async (req, res) => {
     try {
         const userId = req.userId;
-        const {name, email, mobile, password} = req.body;
-        if(!name && !email && !mobile && !password){
+        const { name, email, mobile, password } = req.body;
+        if (!name && !email && !mobile && !password) {
             return res.status(400).json({
                 message: "At least one field (name, email, mobile, password) is required",
                 error: true,
@@ -233,12 +234,12 @@ const updateUserDetails = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-       const updateUser = await UserModel.findByIdAndUpdate(userId,{
-            ...(name && {name}),
-            ...(email && {email}),
-            ...(mobile && {mobile}),
-            ...(password && {password: hashedPassword})
-       },{new: true})
+        const updateUser = await UserModel.findByIdAndUpdate(userId, {
+            ...(name && { name }),
+            ...(email && { email }),
+            ...(mobile && { mobile }),
+            ...(password && { password: hashedPassword })
+        }, { new: true })
 
         return res.status(200).json({
             message: "User details updated successfully",
@@ -256,11 +257,11 @@ const updateUserDetails = async (req, res) => {
     }
 }
 
-const forgotPassword = async (req, res) =>{
+const forgotPassword = async (req, res) => {
     try {
-        const {email} = req.body;
-        const user = await UserModel.findOne({email});
-        if(!user){
+        const { email } = req.body;
+        const user = await UserModel.findOne({ email });
+        if (!user) {
             return res.status(400).json({
                 message: "Email does not match with our records",
                 error: true,
@@ -277,14 +278,14 @@ const forgotPassword = async (req, res) =>{
         await sendEmail({
             to: email,
             subject: "Password Reset OTP",
-            html: forgotPasswordTemplate({name: user.name, otp})
+            html: forgotPasswordTemplate({ name: user.name, otp })
         })
         return res.status(200).json({
             message: "OTP sent to email",
             error: false,
             success: true
-        })  
-        
+        })
+
     } catch (error) {
         return res.status(500).json({
             message: error.message || error,
@@ -294,20 +295,20 @@ const forgotPassword = async (req, res) =>{
     }
 }
 
-const resetPassword = async (req, res) =>{
+const resetPassword = async (req, res) => {
     try {
-        const {email, otp, newPassword} = req.body;
-        const user = await UserModel.findOne({email});
-        if(!user){
-            return res.status(400).json({   
+        const { email, otp, newPassword } = req.body;
+        const user = await UserModel.findOne({ email });
+        if (!user) {
+            return res.status(400).json({
                 message: "Email does not match with our records",
                 error: true,
                 success: false
             })
         }
-        if(user.forgot_password_otp !== otp || user.forgot_password_expiry < Date.now()){
+        if (user.forgot_password_otp !== otp || user.forgot_password_expiry < Date.now()) {
             return res.status(400).json({
-                message: "Invalid or expired OTP",  
+                message: "Invalid or expired OTP",
                 error: true,
                 success: false
             })
@@ -331,25 +332,55 @@ const resetPassword = async (req, res) =>{
     }
 }
 
-const verifyOTP = async(req, res) => {
+const verifyOTP = async (req, res) => {
     try {
-        const {email,otp} = req.body
-        const user = await UserModel.findOne({email});
-        if(!user){
+        const { email, otp } = req.body
+        const user = await UserModel.findOne({ email });
+        if (!user) {
             return res.status(404).json({
                 message: "Email is not registered",
                 error: true,
                 success: false
             })
         }
-        if(user.forgot_password_otp === otp){
+        if (user.forgot_password_otp === otp) {
             return res.status(200).json({
                 message: "OTP verified",
                 error: false,
                 success: true
             })
         }
-        
+
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message || error,
+            error: true,
+            success: false
+        })
+    }
+}
+
+const userProfile = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const user = await UserModel.findById(userId).select(
+            "-password -refresh_token -forgot_password_otp -forgot_password_expiry"
+        );
+        console.log(user)
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+                error: true,
+                success: false
+            })
+        }
+
+        return res.status(200).json({
+            message: "User logged in successfully",
+            error: false,
+            success: true,
+            data: user
+        })
     } catch (error) {
         return res.status(500).json({
             message: error.message || error,
@@ -370,5 +401,6 @@ export {
     updateUserDetails,
     forgotPassword,
     resetPassword,
-    verifyOTP
+    verifyOTP,
+    userProfile
 }

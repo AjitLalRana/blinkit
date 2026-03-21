@@ -1,5 +1,6 @@
 import React, { use } from "react";
 import { useState, useEffect } from "react";
+import { useSelector} from "react-redux";
 import { Link } from "react-router-dom";
 import {
   FiSearch,
@@ -21,6 +22,8 @@ const Header = () => {
   const [cartItems, setCartItems] = useState(null);
   const [cartPrice, setCartPrice] = useState("$0.00");
   const [cartItemsCount, setCartItemsCount] = useState(0);
+  const { user, isLoading } = useSelector((state) => state.userReducer);
+  
 
 
 
@@ -82,7 +85,7 @@ const Header = () => {
 
           {/* ACCOUNT DROPDOWN */}
           <div className="relative group">
-            {!isUser ? (
+            { !user ? (
               <Link
                 to="/login"
                 className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[rgb(var(--text-primary))] hover:text-[rgb(var(--primary))] transition-colors"

@@ -8,7 +8,8 @@ import {
     updateUserDetails,
     forgotPassword,
     resetPassword,
-    verifyOTP
+    verifyOTP,
+    userProfile
 } from '../controllers/user.controller.js';
 import authMiddleware from '../middleware/auth.middleware.js';
 import upload from '../middleware/multer.middleware.js';
@@ -25,6 +26,7 @@ router.put('/update-user', authMiddleware, updateUserDetails);
 router.post('/verify-otp',verifyOTP)
 router.post('/forgot-password', forgotPassword);
 router.post('/reset-password', resetPassword);
+router.get('/user-profile',authMiddleware,userProfile);
 
 
 export default router;
