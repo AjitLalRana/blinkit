@@ -11,11 +11,15 @@ import Orders from '../pages/Orders'
 import ForgotPass from '../pages/ForgotPass'
 import OTPVerification from '../pages/OtpVerification'
 import ResetPassword from '../components/ResetPassword'
+import ProductPreview from '../components/ProductPreview'
 const MainRoutes = () =>{
     return (
         <Routes>
             <Route path="/" element={<Home />}></Route>
             <Route path='/products' element={<Products />}></Route>
+            <Route path='/product/:id' element={<ProductPreview />}></Route>
+
+
             <Route path='/forgot-password' element={<ForgotPass />}></Route>
             <Route path='/register' element={<Register />}></Route>
             <Route path='/login' element={<Login />}></Route>

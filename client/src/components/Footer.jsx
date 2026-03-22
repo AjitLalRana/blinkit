@@ -22,8 +22,8 @@ const Footer = () => {
   const footerLinkClass = "text-sm transition-all duration-300 hover:text-[rgb(var(--primary))] flex items-center gap-1 group";
 
   return (
-    <footer className="bg-[rgb(var(--surface))] border-t border-[rgb(var(--border))] text-[rgb(var(--text-secondary))] pt-16">
-      <div className="max-w-7xl mx-auto px-6 pb-12">
+    <footer className=" border-t border-[rgb(var(--border))] pt-16 text-[16px] sm:text-xl  font-semibold text-[rgb(var(--text-secondary))] bg-red-200">
+      <div className="max-w-7xl mx-auto px-6 pb-12 ">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12">
           
           {/* Brand Identity - Takes more space */}
@@ -40,7 +40,7 @@ const Footer = () => {
                 <a 
                   key={i} 
                   href="#" 
-                  className="p-2 rounded-full border border-[rgb(var(--border))] hover:bg-[rgb(var(--accent-soft))] hover:text-[rgb(var(--primary))] transition-colors"
+                  className="p-2 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--accent-soft))] hover:text-[rgb(var(--primary))] hover:border-[rgb(var(--primary))] transition-colors"
                 >
                   <Icon size={18} />
                 </a>
@@ -96,7 +96,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom Legal Bar */}
-      <div className="bg-[rgb(var(--muted))] border-t border-[rgb(var(--border))] py-8">
+      <div className="bg-[rgb(var(--muted))] border-t border-[rgb(var(--border))] py-8 ">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] uppercase tracking-[0.2em]">
           <p>© {currentYear} ShopMate — All Rights Reserved.</p>
           <div className="flex gap-8">

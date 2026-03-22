@@ -5,6 +5,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useSelector, useDispatch } from "react-redux";
 import { loadUser } from "./store/reducres/userSlice";
+import { loadProducts, setLoading, setProductError } from './store/reducres/productSlice';
 
 // 🔹 Loader Component
 const Loader = () => {
@@ -17,7 +18,7 @@ const Loader = () => {
 
 const App = () => {
   const dispatch = useDispatch();
-  const { user, isLoading } = useSelector((state) => state.userReducer);
+  const { user, isLoading } = useSelector((state) => state?.userReducer);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -38,6 +39,26 @@ const App = () => {
     };
 
     fetchUser();
+  }, [dispatch]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        dispatch(setLoading()); // Start loading state
+        
+        const response = await api.get("/product/get-products");
+
+        if (response.data.success) {
+          // response.data.data refers to the array of products from our controller
+          dispatch(loadProducts(response.data.data));
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        dispatch(setProductError(error.message));
+      }
+    };
+
+    fetchProducts();
   }, [dispatch]);
 
   // 🔥 Loader condition

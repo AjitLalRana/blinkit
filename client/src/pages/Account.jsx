@@ -9,6 +9,8 @@ import {
   FiCreditCard, FiSettings, FiLogOut, FiChevronRight 
 } from "react-icons/fi";
 
+import PseudoNav from "../components/PseudoNav";
+
 const Account = () => {
   const [activeTab, setActiveTab] = useState("profile");
   const dispatch = useDispatch();
@@ -32,6 +34,7 @@ const Account = () => {
 
   return (
     <div className="min-h-screen bg-[rgb(var(--muted))] py-8 px-4 sm:px-6 lg:px-8">
+      <PseudoNav pageTitle="Acc" />
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="mb-8">

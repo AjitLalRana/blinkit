@@ -57,7 +57,7 @@ const Header = () => {
           <input
             type="text"
             placeholder="Search for luxury essentials..."
-            className="w-full bg-[rgb(var(--muted))] border border-[rgb(var(--border))] rounded-full py-2.5 pl-5 pr-12 text-sm text-[rgb(var(--text-primary))] focus:outline-none focus:ring-2 focus:ring-[rgb(var(--primary))/0.2] focus:border-[rgb(var(--primary))] transition-all"
+            className="w-full bg-red-50 border border-[rgb(var(--border))] rounded-full py-2.5 pl-5 pr-12 text-sm text-[rgb(var(--text-primary))] focus:outline-none focus:ring-2 focus:ring-[rgb(var(--primary))/0.2] focus:border-[rgb(var(--primary))] transition-all"
           />
           <button className="absolute right-4 top-1/2 -translate-y-1/2 text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--primary))] transition-colors">
             <FiSearch size={16} />
@@ -108,7 +108,7 @@ const Header = () => {
         <input
           type="text"
           placeholder="Search for luxury essentials..."
-          className="w-full bg-[rgb(var(--muted))] border border-[rgb(var(--border))] rounded-full py-2.5 pl-5 pr-12 text-sm text-[rgb(var(--text-primary))] focus:outline-none focus:ring-2 focus:ring-[rgb(var(--primary))/0.2] focus:border-[rgb(var(--primary))] transition-all"
+          className="w-full bg-red-100  border border-[rgb(var(--border))] rounded-full py-2.5 pl-5 pr-12 text-sm text-[rgb(var(--text-primary))] focus:outline-none focus:ring-2 focus:ring-[rgb(var(--primary))/0.2] focus:border-[rgb(var(--primary))] transition-all "
         />
         <button className="absolute right-4 top-1/2 px-4 -translate-y-1/2 text-[rgb(var(--text-secondary))] hover:text-[rgb(var(--primary))] transition-colors">
           <FiSearch size={16} />
