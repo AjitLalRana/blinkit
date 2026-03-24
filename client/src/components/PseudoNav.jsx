@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiArrowLeft, FiUser, FiHelpCircle } from 'react-icons/fi';
 import logo from '../assets/logo.png'; // Adjust path as needed
+import { useSelector} from 'react-redux'
 
 const PseudoNav = ({ pageTitle }) => {
+  const user = useSelector((state)=> state.userReducer?.user);
   return (
-    <nav className="bg-[rgb(var(--surface))] border-b border-[rgb(var(--border))] sticky top-0 z-50">
+    <nav className="w-full h-auto bg-[rgb(var(--surface))] border-b border-[rgb(var(--border))] sticky top-0 z-50 bg-red-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         
         {/* Left Section: Back or Logo */}
@@ -24,7 +26,7 @@ const PseudoNav = ({ pageTitle }) => {
             <img
               src={logo}
               alt="ShopMate Logo"
-              className="h-10 w-auto object-contain"
+              className="h-10 sm:h-20 w-auto object-contain"
             />
           </Link>
         </div>
@@ -46,12 +48,14 @@ const PseudoNav = ({ pageTitle }) => {
             <span className="hidden xs:inline">Help</span>
           </Link>
           
-          <Link 
+          {
+            !user && (<Link 
             to="/login" 
             className="bg-[rgb(var(--primary))] text-[rgb(var(--surface))] px-4 py-1.5 rounded-full text-sm font-medium hover:opacity-90 transition-opacity"
           >
             Sign In
-          </Link>
+          </Link>)
+          }
         </div>
       </div>
     </nav>

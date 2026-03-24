@@ -8,6 +8,7 @@ const ProductCard = ({ product }) => {
   
   // Calculate discount
   const discountedPrice = discount ? price - (price * (discount / 100)) : price;
+  const fullName = name?.split(" ").map((word)=> word.charAt(0).toUpperCase() + word.slice(1)).join(" ");
 
   const handlePreview = () => {
   // Pass data through state
@@ -20,8 +21,8 @@ const ProductCard = ({ product }) => {
       <div className="relative aspect-square overflow-hidden bg-gray-100">
         <img 
           src={image[0] || ''} 
-          alt={name}
-          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          alt={fullName}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
         
         {discount > 0 && (
@@ -44,7 +45,7 @@ const ProductCard = ({ product }) => {
       {/* Content */}
       <div className="p-4">
         <h3 className="text-sm font-medium text-[rgb(var(--text-primary))] truncate mb-1">
-          {name}
+          {fullName}
         </h3>
         <p className="text-xs text-[rgb(var(--text-secondary))] mb-2">{unit}</p>
         

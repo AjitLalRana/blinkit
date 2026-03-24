@@ -12,6 +12,7 @@ import ForgotPass from '../pages/ForgotPass'
 import OTPVerification from '../pages/OtpVerification'
 import ResetPassword from '../components/ResetPassword'
 import ProductPreview from '../components/ProductPreview'
+import Support from '../pages/Support'
 const MainRoutes = () =>{
     return (
         <Routes>
@@ -31,6 +32,8 @@ const MainRoutes = () =>{
             
             <Route path='/wishlist' element={<Wishlist />}></Route>
             <Route path='/orders' element={<Orders />}></Route>
+
+            <Route path='/support' element={<Support />} ></Route>
 
 
          </Routes>

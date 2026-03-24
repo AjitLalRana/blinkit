@@ -12,6 +12,7 @@ import {
 import PseudoNav from "../components/PseudoNav";
 
 const Account = () => {
+  const user = useSelector((state)=> state.userReducer?.user);
   const [activeTab, setActiveTab] = useState("profile");
   const dispatch = useDispatch();
 
@@ -32,13 +33,16 @@ const Account = () => {
 
   }
 
+  const name = user?.name?.split(" ").map((word)=> word.charAt(0)?.toUpperCase() + word.slice(1)).join(" ");
+
+
   return (
-    <div className="min-h-screen bg-[rgb(var(--muted))] py-8 px-4 sm:px-6 lg:px-8">
-      <PseudoNav pageTitle="Acc" />
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-[rgb(var(--muted))] ">
+      <PseudoNav pageTitle="Account" />
+      <div className="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[rgb(var(--text-primary))]">My Account</h1>
+          <h1 className="text-3xl font-bold text-[rgb(var(--text-primary))]">{name}</h1>
           <p className="text-[rgb(var(--text-secondary))] mt-2">Manage your profile, orders, and preferences.</p>
         </div>
 
