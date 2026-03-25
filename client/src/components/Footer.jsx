@@ -18,6 +18,27 @@ const Footer = () => {
     
   const currentYear = new Date().getFullYear();
 
+  const socialLinks = [
+    {
+      Icon : FiFacebook ,
+      link : "#"
+    },
+    {
+      Icon : FiTwitter ,
+      link : "#"
+    },
+    {
+      Icon : FiInstagram ,
+      link : "https://www.instagram.com/ajitlalrana/"
+    },{
+      Icon : FiLinkedin ,
+      link : "#"
+    },{
+      Icon : FiGithub ,
+      link : "#"
+    },
+  ]
+
   // Helper for consistent link styling
   const footerLinkClass = "text-sm transition-all duration-300 hover:text-[rgb(var(--primary))] flex items-center gap-1 group";
 
@@ -36,13 +57,13 @@ const Footer = () => {
               Experience shopping designed for the modern minimalist.
             </p>
             <div className="flex gap-4">
-              {[FiFacebook, FiTwitter, FiInstagram, FiLinkedin, FiGithub].map((Icon, i) => (
+              {socialLinks?.map((elem, i) => (
                 <a 
                   key={i} 
-                  href="#" 
+                  href={elem?.link} 
                   className="p-2 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--accent-soft))] hover:text-[rgb(var(--primary))] hover:border-[rgb(var(--primary))] transition-colors"
                 >
-                  <Icon size={18} />
+                  <elem.Icon size={18} />
                 </a>
               ))}
             </div>

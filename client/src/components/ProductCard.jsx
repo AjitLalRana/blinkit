@@ -16,9 +16,9 @@ const ProductCard = ({ product }) => {
 };
 
   return (
-    <div onClick={handlePreview} className="group bg-[rgb(var(--surface))] border border-[rgb(var(--border))] rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300">
+    <div onClick={handlePreview} className="group bg-[rgb(var(--surface))] border border-[rgb(var(--border))] rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 hover:cursor-pointer">
       {/* Image Container */}
-      <div className="relative aspect-square overflow-hidden bg-gray-100">
+      <div className="relative aspect-square overflow-hidden bg-gray-100 ">
         <img 
           src={image[0] || ''} 
           alt={fullName}
@@ -47,10 +47,10 @@ const ProductCard = ({ product }) => {
         <h3 className="text-sm font-medium text-[rgb(var(--text-primary))] truncate mb-1">
           {fullName}
         </h3>
-        <p className="text-xs text-[rgb(var(--text-secondary))] mb-2">{unit}</p>
+        <p className="text-[0.5em] text-[rgb(var(--text-secondary))] mb-2">{product?.description?.slice(1,40) + "..."}</p>
         
         <div className="flex items-center gap-2">
-          <span className="text-lg font-bold text-[rgb(var(--primary))]">
+          <span className="text-[1rem] font-bold text-[rgb(var(--primary))]">
             ${discountedPrice.toFixed(2)}
           </span>
           {discount > 0 && (

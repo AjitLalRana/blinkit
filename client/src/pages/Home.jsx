@@ -8,7 +8,6 @@ import Products from './Products'
 const Home = () => {
   const user = useSelector((state)=> state?.userReducer?.user)
   const product = useSelector((state) => state?.productReducer?.allProducts)
-  console.log(product)
   return (
     <div className='w-screen  text-3xl pt-4 mt-30'>
       <Header />
