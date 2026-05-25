@@ -72,7 +72,7 @@ const Header = () => {
         <div className="flex items-center gap-2 md:gap-4">
           {/* CART DROPDOWN */}
           <div className="relative group">
-            <Link to="/cart" className={`${iconButtonClass} flex items-center`}>
+            <Link to="/account/cart" className={`${iconButtonClass} flex items-center`}>
               <FiShoppingCart size={22} />
               <span className="absolute -top-1 -right-1 bg-[rgb(var(--primary))] text-[rgb(var(--surface))] text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
                 {cartItemsCount}

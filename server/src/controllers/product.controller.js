@@ -123,6 +123,37 @@ const deleteProduct = async (req, res) => {
     }
 };
 
+const similarProducts = async (req, res) => {
+    try {
+        const { id} = req.body;
+        const product = await ProductModel.findById(id);
+        if(!product){
+            return res.status(404).json({
+                message: "Product not found",
+                error: true
+
+            })
+
+        }
+        const similarProducts = await ProductModel.find({
+            catrgory: product.category,
+            _id: { $ne: id},
+            publish: true,
+        }).limit(10);
+        return res.status(200).json({
+            message: "Similar products fetched successfully",
+            success: true,
+            data: similarProducts
+        })
+    }
+    catch (error){
+        return res.status(500).json({
+            message: error.message,
+            error: true
+        })
+    }
+}
+
 
 
 
@@ -131,5 +162,6 @@ export {
     getAllProducts,
     getProductDetails,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    similarProducts
 };

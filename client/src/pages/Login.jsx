@@ -30,10 +30,15 @@ const Login = () => {
         toast.success("Login successful!");
         dispatch(loadUser(response?.data?.data));
         console.log(user);
-        navigate("/");
+        if(response?.data?.data?.role === "ADMIN"){
+          navigate("/admin/dashboard");
+        }else{
+          navigate("/");
+        }
       }
     } catch (error) {
       toast.error("Login failed. Please try again.");
+      console.log(error);
     }
   };
 

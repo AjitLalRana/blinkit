@@ -9,11 +9,10 @@ import {
   FiLogOut,
 } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import api from "../config/axios.config";
 import { toast } from "react-toastify";
-import { loadUser,logoutUser } from "../store/reducres/userSlice";
-import PseudoNav from "../components/PseudoNav";
+import { loadUser, logoutUser } from "../store/reducres/userSlice";
 
 const UserProfile = ({ u, onUpdate }) => {
   const user = useSelector((state) => state?.userReducer?.user);
@@ -36,6 +35,7 @@ const UserProfile = ({ u, onUpdate }) => {
   // Logic to handle avatar upload to Cloudinary (calls your uploadAvatar controller)
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
+    console.log(file);
     if (!file) return;
 
     setLoading(true);
@@ -47,28 +47,55 @@ const UserProfile = ({ u, onUpdate }) => {
           "Content-Type": "multipart/form-data",
         },
       });
+      console.log(response);
+
       if (response?.data?.url) {
         toast.success("Avatar uploaded");
         dispatch(loadUser({ ...user, avatar: response.data.url }));
       }
     } catch (error) {
-      toast.error("Failed to upload avatar");
-      console.log(error);
+      toast.error(
+        "Failed to upload avatar. Only JPEG, PNG, and GIF files are allowed.",
+      );
+      console.error("Error uploading avatar:", error);
     }
     setLoading(false);
   };
 
-  const handleLogout = ()=> {
-      dispatch(logoutUser());
-      toast.success("Logout successfully!")
-      navigate('/');
-  
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    toast.success("Logout successfully!");
+    navigate("/");
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      // const response = await api.put("/user/profile", formData);
+      // if (response?.data?.user) {
+      //   toast.success("Profile updated successfully!");
+      //   dispatch(loadUser(response.data.user));
+      //   setIsEditing(false);
+      //   if (onUpdate) onUpdate(response.data.user);
+      // }  
+    } catch (error) {
+      toast.error("Failed to update profile. Please try again.");
+      console.error("Error updating profile:", error);
     }
+    setLoading(false);
+  };
+
 
   return (
     <>
-    <PseudoNav/>
-      <div className="max-w-4xl mx-auto my-5 p-4">
+      <div className="max-w-4xl">
+        {loading && (
+          <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="w-10 h-10 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+          </div>
+        )}
+
         <div className="bg-[rgb(var(--surface))] border border-[rgb(var(--border))] rounded-2xl overflow-hidden shadow-sm">
           {/* Header/Cover Section */}
           <div className="h-32 bg-[rgb(var(--accent-soft))] relative">
@@ -104,10 +131,10 @@ const UserProfile = ({ u, onUpdate }) => {
                 </h1>
                 <p className="text-sm text-[rgb(var(--text-secondary))] flex items-center gap-1">
                   Member since {new Date(user?.createdAt).getFullYear()} •
-                  <span className="text-[rgb(var(--success))] font-medium ml-1 flex items-center gap-0.5">
-                    <FiCheckCircle size={12} /> {user?.status}
-                  </span>
                 </p>
+                <span className="text-[rgb(var(--success))] font-medium ml-1 flex items-center gap-0.5">
+                  <FiCheckCircle size={12} /> {user?.status}
+                </span>
               </div>
             </div>
           </div>
@@ -126,7 +153,7 @@ const UserProfile = ({ u, onUpdate }) => {
               </button>
             </div>
 
-            <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-xs font-bold text-[rgb(var(--text-secondary))] uppercase tracking-tighter">
                   Full Name
@@ -218,7 +245,10 @@ const UserProfile = ({ u, onUpdate }) => {
                   {new Date(user?.last_login_date).toLocaleDateString()}
                 </p>
               </div>
-              <button onClick={handleLogout} className="flex items-center gap-2 text-[rgb(var(--danger))] font-bold text-sm hover:underline">
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 text-[rgb(var(--danger))] font-bold text-sm hover:underline"
+              >
                 <FiLogOut /> Logout
               </button>
             </div>
